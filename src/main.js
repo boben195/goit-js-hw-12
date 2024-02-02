@@ -20,7 +20,7 @@ let page = 1;
 let query = "";
 let max = 0;
 const hiddenBtn = "is-hidden";
-
+/*************************************** */
 form.addEventListener('submit', handleSearch);
 
 async function handleSearch(event) {
@@ -53,6 +53,27 @@ async function handleSearch(event) {
       });
   } finally {
     form.reset();
+    if (page === max) {
+      loadBtn.classList.add(hiddenBtn);
+      createMessage("We're sorry, but you've reached the end of search results!");
+    };
+  };
+};
+/*************************************************** */
+async function handleLoad() {
+  page++;
+  try {
+    showLoader(true);
+    loadBtn.classList.add(hiddenBtn);
+    const { hits } = await getPictures(query, page);
+    createMarkup(hits, list);
+    showLoader(false);
+  } catch (error) {
+        iziToast.error({
+        title: 'ERROR',
+        message: `❌ Ooopsi Doopsi ${error}`,
+      });
+  } finally {
     if (page === max) {
       loadBtn.classList.add(hiddenBtn);
       createMessage("We're sorry, but you've reached the end of search results!");
