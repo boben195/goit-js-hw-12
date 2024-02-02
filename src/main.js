@@ -21,7 +21,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api';
 let page = 1;
 let query = "";
 let max = 0;
-const hiddenBtn = "is-hidden";
+
 /*************************************** */
 
 
@@ -35,6 +35,7 @@ async function handleSearch(event) {
   query = form.query.value.trim();
   if (!query) {
     createMessage(`The search field can't be empty! Please, enter your request!`);
+    loadBtn.style.display = 'none';
     return;
   }
   try {
@@ -42,7 +43,6 @@ async function handleSearch(event) {
     max = Math.ceil(total / 15);
     createList(hits, list);
     if (hits.length > 0) {
-      loadBtn.classList.remove(hiddenBtn);
       loadBtn.addEventListener("click", handleLoad);
     } else {
       loadBtn.style.display = 'block';
@@ -140,7 +140,10 @@ function showLoader(state = true) {
 
 loader.classList.remove('loader')
 
-
+function scrollImg() {
+  const rect = document.querySelector('.gallery-link').getBoundingClientRect();
+  window.scrollBy({ top: rect.height * 2, left: 0, behavior: 'smooth' });
+}
 
 
 /************************************************************************************ */
