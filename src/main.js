@@ -6,7 +6,6 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 import axios from "axios";
 
-//const BASE_URL = "https://pixabay.com/api/";
 const API_KEY = "42039284-aa75c07fa754230e40c75f28c";
 
 const btn = document.querySelector(".btn");
@@ -15,7 +14,7 @@ const list = document.querySelector(".gallery");
 const loader = document.querySelector(".loader");
 const loadBtn = document.querySelector(".btn-load");
 
-loadBtn.style.display = 'none';
+loadBtn.style.display = "none";
 //************************ */
 axios.defaults.baseURL = 'https://pixabay.com/api';
 let page = 1;
@@ -31,11 +30,11 @@ async function handleSearch(event) {
   event.preventDefault();
   list.innerHTML = "";
   page = 1;
-  loadBtn.style.display = 'block';
+  loadBtn.style.display = "block";
   query = form.query.value.trim();
   if (!query) {
-    createMessage(`The search field can't be empty! Please, enter your request!`);
-    loadBtn.style.display = 'none';
+    createMessage("The search field can't be empty! Please, enter your request!");
+    loadBtn.style.display = "none";
     return;
   }
   try {
@@ -45,20 +44,20 @@ async function handleSearch(event) {
     if (hits.length > 0) {
       loadBtn.addEventListener("click", handleLoad);
     } else {
-      loadBtn.style.display = 'block';
-      createMessage(`Sorry, there are no images matching your search query. Please, try again!`);
+      loadBtn.style.display = "none";
+      createMessage("Sorry, there are no images matching your search query. Please, try again!");
     };
   
     showLoader(false);
   } catch (error) {
         iziToast.error({
-        title: 'ERROR',
+        title: "ERROR",
         message: `❌ Ooopsi Doopsi ${error}`,
       });
   } finally {
     form.reset();
     if (page === max) {
-      loadBtn.style.display = 'block';
+      loadBtn.style.display = "block";
       createMessage("We're sorry, but you've reached the end of search results!");
     };
   };
@@ -68,18 +67,18 @@ async function handleLoad() {
   page++;
   try {
     showLoader(true);
-    loadBtn.style.display = 'block';
+    loadBtn.style.display = "block";
     const { hits } = await getPictures(query, page);
     createList(hits, list);
     showLoader(false);
   } catch (error) {
         iziToast.error({
-        title: 'ERROR',
+        title: "ERROR",
         message: `❌ Ooopsi Doopsi ${error}`,
       });
   } finally {
     if (page === max) {
-      loadBtn.style.display = 'block';
+      loadBtn.style.display = "block";
       createMessage("We're sorry, but you've reached the end of search results!");
     };
   };
@@ -133,17 +132,13 @@ async function getPictures(query, page = 1) {
 }
 
 function showLoader(state = true) {
-  loader.classList.add('loader')
+  loader.classList.add("loader")
   loader.style.display = !state ? 'none' : 'inline-block';
   btn.disabled = state;
 }
 
-loader.classList.remove('loader')
+loader.classList.remove("loader")
 
-function scrollImg() {
-  const rect = document.querySelector('.gallery-link').getBoundingClientRect();
-  window.scrollBy({ top: rect.height * 2, left: 0, behavior: 'smooth' });
-}
 
 
 /************************************************************************************ */
