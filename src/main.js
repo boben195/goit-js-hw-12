@@ -57,7 +57,7 @@ async function handleSearch(event) {
   } finally {
     form.reset();
     if (page === max) {
-      loadBtn.style.display = "block";
+      loadBtn.style.display = "none";
       createMessage("We're sorry, but you've reached the end of search results!");
     };
   };
@@ -78,7 +78,7 @@ async function handleLoad() {
       });
   } finally {
     if (page === max) {
-      loadBtn.style.display = "block";
+      loadBtn.style.display = "none";
       createMessage("We're sorry, but you've reached the end of search results!");
     };
   };
